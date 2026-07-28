@@ -1,6 +1,6 @@
 package com.itjob.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -22,27 +22,29 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class Projects {
+public class Project {
 
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(length=20, nullable=false)
+    @Column(length=100, nullable=false)
     private String title;
 
-    @Column(length=200, nullable=false)
+    @Column(length=500, nullable=false)
     private String description;
 
     private String websiteLink;
 
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern="MM-yyyy")
-    private Date startDate;
+    private LocalDate startDate;
 
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern="MM-yyyy")
-    private Date endDate;
+    private LocalDate endDate;
+
+    private boolean currentlyWorking;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="candidate_id", nullable=false)

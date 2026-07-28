@@ -27,7 +27,7 @@ import lombok.Setter;
 @Table(name = "candidates")
 public class Candidate extends User {
 
-    @Column(nullable=false, length=25)
+    @Column(length=100)
     private String fullName;
 
     private String address;
@@ -38,31 +38,41 @@ public class Candidate extends User {
 
     private String linkedInLink;
 
-    private String PortfolioLink;
+    private String portfolioLink;
 
     @Column(length= 500)
     private String about;
 
-    // Technical Skills
-    @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name="candidate_skills", joinColumns= @JoinColumn(name="candidate_id"), inverseJoinColumns=@JoinColumn(name="skill_id"))
+    @Column(length = 500)
+    private String resumeUrl;
+
+    @Column(length = 500)
+    private String resumePublicId;
+
+    // Technical Skills (stored as ManyToMany referencing the global skills table)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "candidate_skills",
+        joinColumns = @JoinColumn(name = "candidate_id"),
+        inverseJoinColumns = @JoinColumn(name = "skill_id")
+    )
     private Set<Skills> skills = new HashSet<>();
 
     // Experience
-    @OneToMany(mappedBy="candidate", cascade=CascadeType.ALL)
-    private List<Experience> experiences;
+    @OneToMany(mappedBy="candidate", cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<Experience> experiences = new ArrayList<>();
 
     // Project
-    @OneToMany(mappedBy="candidate", cascade=CascadeType.ALL)
-    private List<Projects> projects;
+    @OneToMany(mappedBy="candidate", cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<Project> projects =  new ArrayList<>();
 
     // Education
-    @OneToMany(mappedBy="candidate", cascade=CascadeType.ALL)
-    private List<Educations> educations;
+    @OneToMany(mappedBy="candidate", cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<Education> educations = new ArrayList<>();
 
     // Certficates
-    @OneToMany(mappedBy="candidate", cascade=CascadeType.ALL)
-    private List<Certificate> certificates;
+    @OneToMany(mappedBy="candidate", cascade=CascadeType.ALL, orphanRemoval = true)
+    private List<Certificate> certificates =  new ArrayList<>();
 
     @OneToMany(mappedBy = "candidate", cascade = CascadeType.ALL)
     private List<Application> applications = new ArrayList<>();

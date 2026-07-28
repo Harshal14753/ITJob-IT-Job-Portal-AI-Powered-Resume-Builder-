@@ -1,12 +1,12 @@
 package com.itjob.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,6 @@ import lombok.Setter;
 @Table(name = "recruiter")
 public class Recruiter extends User {
 
-    @NotBlank(message = "Company name required")
     private String companyName;
 
     private String companyWebsite;
@@ -26,6 +25,6 @@ public class Recruiter extends User {
     private String department;
 
     @OneToMany(mappedBy="recruiter", cascade=CascadeType.ALL)
-    private List<Job> jobPosted;
+    private List<Job> jobPosted = new ArrayList<>();
 
 }

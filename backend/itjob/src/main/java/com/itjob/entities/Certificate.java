@@ -1,7 +1,9 @@
 package com.itjob.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -30,12 +32,14 @@ public class Certificate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    private UUID id;
 
     @NotBlank(message = "Certificate name is required")
     private String certificateName;
 
-    @NotBlank(message = "Issuing organization is required")
+    // Not using @NotBlank here because AI-parsed resume data may not include issuing organization
+    // Removing the constraint prevents a ConstraintViolationException from blocking the entire profile save.
+    // Validation should be handled at the controller/service layer if needed.
     private String issuingOrganization;
 
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
@@ -47,7 +51,7 @@ public class Certificate {
     private String credentialUrl;
 
     @OneToMany(mappedBy="certificate", cascade=CascadeType.ALL)
-    private List<Skills> skills;
+    private List<Skills> skills = new ArrayList<>();
 
     @Column(length = 1000)
     private String description;

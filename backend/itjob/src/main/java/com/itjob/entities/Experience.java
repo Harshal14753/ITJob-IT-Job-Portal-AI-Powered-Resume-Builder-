@@ -1,6 +1,6 @@
 package com.itjob.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,27 +31,29 @@ public class Experience {
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(length=20, nullable=false)
+    @Column(length=100, nullable=false)
     private String jobRole;
 
     @Enumerated(EnumType.STRING)
     private JobType jobType;
 
-    @Column(length=20, nullable=false)
+    @Column(length=100, nullable=false)
     private String companyName;
 
     private String location;
 
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date startDate;
+    private LocalDate startDate;
 
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date endDate;
+    private LocalDate endDate;
 
-    @Column(length=200, nullable=false)
+    @Column(length=2000, nullable=false)
     private String description;
+
+    private boolean currentlyWorking;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="candidate_id", nullable=false)

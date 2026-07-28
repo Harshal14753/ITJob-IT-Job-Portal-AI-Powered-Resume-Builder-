@@ -1,6 +1,7 @@
 package com.itjob.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +29,7 @@ import lombok.Setter;
 public class Application {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
@@ -37,6 +38,10 @@ public class Application {
 
     @Enumerated(EnumType.STRING)
     private ApplicationStatus status; // PENDING, ACCEPTED, REJECTED
+
+    private LocalDateTime statusUpdatedAt;
+
+    private boolean autoApplied = false;
 
     // Many Applications belong to One Candidate
     @ManyToOne(fetch = FetchType.LAZY)

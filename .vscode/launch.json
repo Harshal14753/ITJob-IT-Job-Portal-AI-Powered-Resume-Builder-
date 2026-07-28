@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ITJobApplication<itjob>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.itjob.ITJobApplication",
+            "projectName": "itjob",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
